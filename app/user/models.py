@@ -20,9 +20,9 @@ class User(db.Model):
     # __tablename__ = 't_user'
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True, nullable=True)
-    # weight = db.Column(db.Float(10, 2), index=True, unique=True)
+    weight = db.Column(db.Float(10, 2), index=True, unique=True)
     # # decimal
-    # money = db.Column(db.Numeric(10, 2), index=True, unique=True)
-    # create_date = db.Column(db.DateTime, default=datetime.datetime.now())
+    money = db.Column(db.Numeric(10, 2), index=True, unique=True)
+    create_date = db.Column(db.DateTime, default=datetime.datetime.now())
     # # 不要在text字段上面加索引
-    # desc = db.Column(db.Text())
+    desc = db.Column(db.Text())
