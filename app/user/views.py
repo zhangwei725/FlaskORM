@@ -1,5 +1,6 @@
 from flask import Blueprint
 
+from app.ext import db
 from .models import User
 
 """
@@ -14,9 +15,12 @@ user = Blueprint('user', __name__)
 
 @user.route('/show/')
 def show():
-    # 查询所有的行跟列
-    users = User.query.all()
     # 过滤列
+    query = db.session.query(User.name).all()
+    # 查询所有的行跟列
+
+    users = User.query.all()
+
     user = User.query.filter_by(name='test1').first()
     #     # 过滤行
     # filter 可以使用运算符
