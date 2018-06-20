@@ -82,9 +82,26 @@ def query_limit(page, size):
     #
     paginate = User.query.order_by(User.uid).paginate(page=page, per_page=size, error_out=False)
     users = paginate.items
+    # 总共多少条
     print(paginate.total)
+    # 表示总共多少页
     print(paginate.pages)
-    return render_template('user/users.html', users=users)
+    # 获取当前选中的页数
+    print(paginate.page)
+    # 如果有就返回 True 否则返回false
+    print(paginate.has_prev)
+    print(paginate.has_next)
+    """
+    <ul>
+    <li><a>1<>
+    <li><a>2<>
+    <li><a>3<>
+    <li><a>4<>
+    </ul>
+    left_edge =2 表示最左边2页
+    """
+    # paginate.iter_pages():
+    return render_template('user/users.html', users=users, paginate=paginate)
 
 
 # 什么是事务  指的一系列操作, 这些操作要么一起成功要么全部失败

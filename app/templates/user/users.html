@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% import 'macro/macro.html' as macro %}
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,6 +17,23 @@
             text-align: center;
         }
 
+        ul {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        ul li {
+            float: left;
+        }
+
+        ul a {
+            text-decoration: none;
+            padding: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            color: black;
+        }
     </style>
 
 </head>
@@ -32,11 +52,50 @@
             <td></td>
         </tr>
     {% endfor %}
-
 </table>
-<a href="http://127.0.0.1:9000/user/limit/1/10">1</a>
-<a href="http://127.0.0.1:9000/user/limit/5/10">5</a>
-<a href="http://127.0.0.1:9000/user/limit/6/10">6</a>
 
+{% if paginate %}
+    <div>
+        {{ macro.pagination(paginate,'user.query_limit') }}
+    </div>
+{% endif %}
+
+{#就是函数()#}
+
+<!--
+如果有上一页  比如当前是page=5, page-1
+<a href="http://127.0.0.1:9000/user/limit/4/10/">4</a>
+如果没有呢
+<a href="#">上页</a>
+-->
+<!--
+<ul>
+<li><a href="
+    {% if paginate.has_prev %}
+        {{ url_for('user.query_limit',page=paginate.page - 1,size=10) }}
+    {% else %}
+        #
+    {% endif %}
+    ">上页</a></li>
+{% for p in paginate.iter_pages(left_edge=9,right_edge=9) %}
+    {% if  p %}
+        <li><a href="{{ url_for('user.query_limit',page=p, size=10) }}">{{ p }}</a></li>
+    {% endif %}
+{% endfor %}
+<li><a href="{% if paginate.has_next %}
+        {{ url_for('user.query_limit',page=paginate.page + 1,size=10) }}
+    {% else %}
+        #
+    {% endif %}">下页</a></li>
+</ul>
+-->
+{#<a href="">上页</a>#}
+{#<a href="http://127.0.0.1:9000/user/limit/1/10/">1</a>#}
+{#<a href="http://127.0.0.1:9000/user/limit/2/10/">2</a>#}
+{#<a href="http://127.0.0.1:9000/user/limit/3/10/">3</a>#}
+{#<a href="http://127.0.0.1:9000/user/limit/4/10/">4</a>#}
+{#<a href="http://127.0.0.1:9000/user/limit/5/10/">5</a>#}
+{#<a href="http://127.0.0.1:9000/user/limit/6/10/">6</a>#}
+{#<a href="">下页</a>#}
 </body>
 </html>
