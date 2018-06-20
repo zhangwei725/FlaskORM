@@ -29,7 +29,6 @@
 
         ul a {
             text-decoration: none;
-            padding: 10px;
             font-size: 15px;
             cursor: pointer;
             color: black;
@@ -43,12 +42,14 @@
         <th>ID</th>
         <th>用户名</th>
         <th>注册时间</th>
+        <th>操作</th>
     </tr>
     {% for user in users %}
         <tr>
             <td>{{ user.uid }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.create_date }}</td>
+            <td><a href="#">添加</a><a href="#">修改</a><a href="#">删除</a></td>
             <td></td>
         </tr>
     {% endfor %}
