@@ -57,7 +57,6 @@ page*size
 select  * from user
 limit 0 10
 """
-1 * 10
 
 
 # page   pagezize
@@ -68,7 +67,6 @@ limit 0 10
 
 
 #
-
 
 @user.route('/limit/<int:page>/<int:size>/')
 def query_limit(page, size):
@@ -116,3 +114,29 @@ def save_all():
     # insert  into user (name) values('test1'),('test')
     db.session.commit()
     return '批量保存'
+
+
+# 1>要根据条件先查询出对象
+#
+@user.route('/update/')
+def update_one():
+    # user = User.query.filter_by(name='test1').first()
+    # user.name = '呵呵'
+    # db.session.commit()
+    User.query.filter_by(name='test1').update({'name': '呵呵'})
+    db.session.commit()
+
+
+# connection
+# 100 + 50
+@user.route('/batch/')
+def batch_update():
+    # User.query.filter(User.uid != 1).update({User.name: 'hehe'})
+    # 表示 四则运算
+    # User.query.filter(User.name == 'test1').update({User.money: User.money * 5}, synchronize_session='evaluate')
+    #
+    # User.query.filter(User.name == 'test1').update({User.money: User.money * 5}, synchronize_session='evaluate')
+    # 表示字符串拼接
+    User.query.filter(User.uid > 0).update({User.msg: '/upload' + User.msg}, synchronize_session=False)
+    db.session.commit()
+    return '批量更新'

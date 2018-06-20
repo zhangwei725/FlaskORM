@@ -931,81 +931,132 @@
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
     <table id="235" parent="4" name="alembic_version"/>
-    <table id="236" parent="4" name="user"/>
-    <column id="237" parent="235" name="version_num">
+    <table id="236" parent="4" name="cate"/>
+    <table id="237" parent="4" name="shop"/>
+    <table id="238" parent="4" name="user"/>
+    <column id="239" parent="235" name="version_num">
       <Position>1</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="238" parent="235" name="PRIMARY">
+    <key id="240" parent="235" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>version_num</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="239" parent="236" name="uid">
+    <column id="241" parent="236" name="cid">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="240" parent="236" name="name">
+    <column id="242" parent="236" name="cname">
       <Position>2</Position>
       <DataType>varchar(64)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="241" parent="236" name="weight">
+    <index id="243" parent="236" name="ix_cate_cname">
+      <ColNames>cname</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="244" parent="236" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>cid</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="245" parent="236" name="ix_cate_cname">
+      <ColNames>cname</ColNames>
+      <UnderlyingIndexName>ix_cate_cname</UnderlyingIndexName>
+    </key>
+    <column id="246" parent="237" name="sid">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="247" parent="237" name="name">
+      <Position>2</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="248" parent="237" name="cid">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="249" parent="237" name="ix_shop_name">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <index id="250" parent="237" name="cid">
+      <ColNames>cid</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="251" parent="237" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>sid</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="252" parent="237" name="ix_shop_name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>ix_shop_name</UnderlyingIndexName>
+    </key>
+    <foreign-key id="253" parent="237" name="shop_ibfk_1">
+      <ColNames>cid</ColNames>
+      <RefSchemaName>flask</RefSchemaName>
+      <RefTableName>cate</RefTableName>
+      <RefColNames>cid</RefColNames>
+    </foreign-key>
+    <column id="254" parent="238" name="uid">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="255" parent="238" name="name">
+      <Position>2</Position>
+      <DataType>varchar(64)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="256" parent="238" name="weight">
       <Position>3</Position>
       <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="242" parent="236" name="money">
+    <column id="257" parent="238" name="money">
       <Position>4</Position>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="243" parent="236" name="create_date">
+    <column id="258" parent="238" name="create_date">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="244" parent="236" name="desc">
+    <column id="259" parent="238" name="msg">
       <Position>6</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="245" parent="236" name="ix_user_name">
+    <index id="260" parent="238" name="ix_user_name">
       <ColNames>name</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="246" parent="236" name="ix_user_weight">
-      <ColNames>weight</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <index id="247" parent="236" name="ix_user_money">
-      <ColNames>money</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <key id="248" parent="236" name="PRIMARY">
+    <key id="261" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>uid</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="249" parent="236" name="ix_user_name">
+    <key id="262" parent="238" name="ix_user_name">
       <ColNames>name</ColNames>
       <UnderlyingIndexName>ix_user_name</UnderlyingIndexName>
-    </key>
-    <key id="250" parent="236" name="ix_user_weight">
-      <ColNames>weight</ColNames>
-      <UnderlyingIndexName>ix_user_weight</UnderlyingIndexName>
-    </key>
-    <key id="251" parent="236" name="ix_user_money">
-      <ColNames>money</ColNames>
-      <UnderlyingIndexName>ix_user_money</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>
