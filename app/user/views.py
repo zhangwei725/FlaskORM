@@ -125,7 +125,6 @@ def batch_update():
     # User.query.filter(User.uid != 1).update({User.name: 'hehe'})
     # 表示 四则运算
     # User.query.filter(User.name == 'test1').update({User.money: User.money * 5}, synchronize_session='evaluate')
-    #
     # User.query.filter(User.name == 'test1').update({User.money: User.money * 5}, synchronize_session='evaluate')
     # 表示字符串拼接
     User.query.filter(User.uid > 0).update({User.msg: '/upload' + User.msg}, synchronize_session=False)

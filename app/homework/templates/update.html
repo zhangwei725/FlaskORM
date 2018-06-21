@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{{ url_for('homework.update') }}" method="post">
+    <input type="hidden" name="sid" value="{{ shop.sid }}">
+    <input type="text" name="name" value="{{ shop.name }}">
+    <input type="text" name="cid" value="{{ shop.cid }}">
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

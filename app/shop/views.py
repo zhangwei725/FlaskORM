@@ -46,11 +46,10 @@ def find():
     # 通过一的一方查多的一方
     # shop = db.session.query(Shop.sid, Shop.name, Shop.cid).filter(Shop.sid == 1).first()
     # cate = Cate.query.get(shop.cid)
-
     return '通过一的方查多的一方'
 
 
-# /shop?sid=1
+# /id?sid=1
 @shop.route('/id/', methods=['get', 'post', 'put'])
 def find_by_id():
     sid = request.values.get('sid', default=0, type=int)

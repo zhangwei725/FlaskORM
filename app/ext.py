@@ -6,7 +6,6 @@ db = SQLAlchemy()
 
 migrate = Migrate()
 
-
 def init_ext(app: Flask):
     # 初始化数据库相关的配置
     init_db_config(app)

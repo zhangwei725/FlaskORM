@@ -28,3 +28,33 @@
     </ul>
 {% endmacro %}
 
+
+
+
+
+{#支持 http://127.0.0.1:9000/work/list/?page=2&size=10/#}
+{% macro  paginate(paginate,endpoint,size=10) %}
+
+    <ul>
+        <li><a href="
+    {% if paginate.has_prev %}
+       {{ url_for(endpoint) }}?page={{ paginate.page - 1 }}&size={{ size }}
+    {% else %} # {% endif %}">上页</a>
+
+        </li>
+        {% for p in paginate.iter_pages(left_edge=9,right_edge=9) %}
+            {% if  p %}
+                <!--url_for(endpoint)  /work/list/ -->
+                <!--url_for(endpoint)  /work/list/?page=1&size=10 -->
+
+                <li><a href="{{ url_for(endpoint) }}?page={{ p }}&size={{ size }}">{{ p }}</a></li>
+            {% endif %}
+        {% endfor %}
+        <li><a href="{% if paginate.has_next %}
+         {{ url_for(endpoint) }}?page={{ paginate.page + 1 }}&size={{ size }}
+    {% else %}
+        #
+    {% endif %}">下页</a></li>
+    </ul>
+{% endmacro %}
+

@@ -1,6 +1,7 @@
 from flask import Flask
 
 from app.ext import init_ext
+from app.homework.views import homework
 from app.shop.views import shop
 from app.user.views import user
 
@@ -17,3 +18,4 @@ def create_app():
 def register_blue():
     app.register_blueprint(user, url_prefix='/user')
     app.register_blueprint(shop, url_prefix='/shop')
+    app.register_blueprint(homework, url_prefix='/work')
