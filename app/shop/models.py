@@ -12,11 +12,9 @@ from app.ext import db
 一对一  关系   
 在商品中有详情的对象,在详情表没有商品的对象 这种叫单向
 在商品中有详情的对象,在详情表中也有商品的对象
-
-
 """
-
-
+"""
+"""
 # 建立引用
 class Shop(db.Model):
     sid = db.Column(db.Integer, primary_key=True)
@@ -25,7 +23,10 @@ class Shop(db.Model):
     # cid = db.Column(db.Integer, db.ForeignKey(Cate.cid))
     # 只是单纯建立外键关系
     cid = db.Column(db.Integer, db.ForeignKey('cate.cid'))
-    cate = db.relationship('Cate', back_populates='shops')
+    # 如果想建立关系 也就是说想通过子表查询出
+    # cate = db.relationship('Cate', back_populates='shops')
+
+
 class Cate(db.Model):
     cid = db.Column(db.Integer, primary_key=True)
     cname = db.Column(db.String(64), index=True, unique=True, nullable=True)
@@ -39,10 +40,9 @@ class Cate(db.Model):
             3> immediate  等主表数据查询完成之后再去查询子表数据
     
     back_populates  方向引用(当两个对象需要双向引用的时候使用)
-             值对应双向引用对象的字段
+                    值对应双向引用对象的字段
     # back-ref
-    uselist=None, 如果想建立一对一的关系 直接在uselist=false
+    uselist=None, 如果想建立一对一的关系 直接在 uselist=false
     order_by=False,指定查询子表的排序字段
-          
     """
-    shops = db.relationship('Shop', back_populates='cate', lazy='dynamic', userlist=False)
+    shops = db.relationship('Shop', lazy='dynamic')
