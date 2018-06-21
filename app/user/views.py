@@ -6,9 +6,8 @@ from app.ext import db
 from .models import User
 
 """
-
 """
-user = Blueprint('user', __name__)
+user = Blueprint('user', __name__, template_folder='templates', static_folder='static')
 
 
 # 过滤函数
@@ -64,8 +63,6 @@ limit 0 10
 # limit  表示去多少条数据
 # offset 表示偏移量  表示从设置的偏移量大小+1开始获取数据
 # 计算最大页数
-
-
 #
 
 @user.route('/limit/<int:page>/<int:size>/')
@@ -73,7 +70,6 @@ def query_limit(page, size):
     # 注意:做分页的不需要设置执行函数
     # users = db.session.query(User.name, User.uid, User.create_date).order_by(User.uid).limit(size).offset(
     #     (page - 1) * size)
-    #
     # total = User.query.count() / size if User.query.count() % size == 0 else User.query.count() / size + 1
     # print(total)
     # users = User.query.order_by().slice((page - 1) * size, page * size)
@@ -89,13 +85,8 @@ def query_limit(page, size):
     # 如果有就返回 True 否则返回false
     print(paginate.has_prev)
     print(paginate.has_next)
+
     """
-    <ul>
-    <li><a>1<>
-    <li><a>2<>
-    <li><a>3<>
-    <li><a>4<>
-    </ul>
     left_edge =2 表示最左边2页
     """
     # paginate.iter_pages():
