@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 import logging
 from app.ext import db
-from app.shop.models import Cate, Shop
+from app.shop.models import Cate, Shop, Detail
 
 shop = Blueprint('shop', __name__)
 
@@ -57,3 +57,17 @@ def find_by_id():
     print(shop.name)
     print(shop.cate.cname)
     return '通过一的方查多的一方'
+
+
+@shop.route('/test/', methods=['get', 'post', 'put'])
+def test():
+    detail = Detail.query.get(1)
+    print(detail.shop)
+    return '一对一'
+
+
+@shop.route('/test2/', methods=['get', 'post', 'put'])
+def test2():
+    shop = Shop.query.get(1)
+    print(shop.detail)
+    return '一对一'

@@ -20,7 +20,6 @@ def list():
     shops = paginate.items
     return render_template('shops.html', shops=shops, paginate=paginate)
 
-
 """
 添加商品
 """

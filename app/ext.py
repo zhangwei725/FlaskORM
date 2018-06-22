@@ -12,7 +12,7 @@ def init_ext(app: Flask):
 
 
 def init_db_config(app):
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@127.0.0.1:3306/flask'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@127.0.0.1:3306/flask?charset=utf8'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     db.init_app(app)
     migrate.init_app(app, db)

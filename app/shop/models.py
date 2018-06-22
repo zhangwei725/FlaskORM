@@ -16,6 +16,7 @@ from app.ext import db
 
 
 # 建立引用
+#  详情的主表
 class Shop(db.Model):
     sid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True, nullable=True)
@@ -25,6 +26,28 @@ class Shop(db.Model):
     cid = db.Column(db.Integer, db.ForeignKey('cate.cid'))
     # 如果想建立关系 也就是说想通过子表查询出
     cate = db.relationship('Cate', back_populates='shops')
+    detail = db.relationship('Detail', backref='shop', uselist=False)
+
+
+# 商品的子表
+class Detail(db.Model):
+    did = db.Column(db.Integer, primary_key=True)
+    price = db.Column(db.Numeric(10, 2))
+    sid = db.Column(db.Integer, db.ForeignKey(Shop.sid, ondelete='CASCADE'))
+
+
+"""
+查询
+增加 先添加主表,才能添加子表数据
+更新
+删除 删除主表数据 cascade set_null
+
+
+
+
+
+
+"""
 
 
 class Cate(db.Model):
@@ -41,11 +64,16 @@ class Cate(db.Model):
 
     back_populates  方向引用(当两个对象需要双向引用的时候使用)
                     值对应双向引用对象的字段
-    # backref
+    # backref  backref='cate' 例如可以使用 shop.cate
     uselist=None, 如果想建立一对一的关系 直接在 uselist=false
     order_by=False,指定查询子表的排序字段
     """
-    # 只能用于一对多 还多对多
+    # 解决开发中有些时候查询主表相关联的子表的数据过大时
+    # 默认是 select 立即加载
+    # dynamic 懒加载  只会加载主表的数据,不会把子表的数据也加载进内存(只会生成sql语句,
+    # 当我们需要用到数据的时候,去执行查询吧数据加载进内存)
+    shops = db.relationship('Shop', back_populates='cate', order_by=Shop.sid, lazy='dynamic')
+    # 只能用于一对多 还多对多  能通过一的一方的查询吧多的一方也查询出来
     shops = db.relationship('Shop', back_populates='cate', lazy='dynamic')
 
 # 老版本
@@ -54,9 +82,8 @@ class Cate(db.Model):
 #     cname = db.Column(db.String(64), index=True, unique=True, nullable=True)
 #     shops = db.relationship('Shop', backref='cate', lazy='dynamic')
 
-
-# shop.cate
 # class Shop(db.Model):
 #     sid = db.Column(db.Integer, primary_key=True)
 #     name = db.Column(db.String(64), index=True, unique=True, nullable=True)
 #     cid = db.Column(db.Integer, db.ForeignKey('cate.cid'))
+# 对多多肯定有第三张表

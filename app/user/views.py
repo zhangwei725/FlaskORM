@@ -3,7 +3,8 @@ from operator import and_, or_
 from flask import Blueprint, render_template
 
 from app.ext import db
-from .models import User
+
+from .models import User, Permission, Role
 
 """
 """
@@ -129,4 +130,51 @@ def batch_update():
     # 表示字符串拼接
     User.query.filter(User.uid > 0).update({User.msg: '/upload' + User.msg}, synchronize_session=False)
     db.session.commit()
+    #
     return '批量更新'
+
+
+# ================多对多===============
+# 增删改查的权限
+@user.route('/add/role/')
+def add_role():
+    role = Role('admin', '超级管理员')
+    db.session.add(role)
+    db.session.add_all([Permission('delete', '删除操作'),
+                        Permission('update', '更新操作'),
+                        Permission('insert', '添加操作'),
+                        Permission('select', '查看操作')])
+    db.session.commit()
+    return '添加权限角色'
+
+
+@user.route('/add/role/per/')
+def add_role_per():
+    admin = Role.query.get(1)
+    admin.permissions = Permission.query.all()
+    db.session.commit()
+    return '添加权限角色'
+
+
+@user.route('/find/role/')
+def find_role():
+    role = Role.query.get(1)
+    for per in role.permissions:
+        print(per.per_name)
+    return '通过角色查询权限'
+
+
+@user.route('/del/msg/')
+def del_msg():
+    if has_per():
+        return '删除成功'
+    else:
+        return '没有相关的权限,请与管理员联系'
+
+
+def has_per():
+    role = Role.query.get(1)
+    for per in role.permissions:
+        if per.per_name == 'delete':
+            return True
+    return False
